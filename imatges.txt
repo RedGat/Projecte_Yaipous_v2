@@ -1,0 +1,16 @@
+Bellatrix.jpg : cabell moreno , ulleres no , sexe femella , huma si
+Crookshanks.jpg : cabell pelroig , ulleres no , sexe mascle , huma no
+Dobby.jpg : cabell calb , ulleres no , sexe mascle , huma no
+Draco.jpg : cabell ros , ulleres no , sexe mascle , huma no
+Fang.jpg : cabell moreno , ulleres no , sexe mascle , huma no
+Ginny.jpg : cabell pelroig , ulleres no , sexe femella , huma si
+Gringotts.jpeg : cabell calb , ulleres si , sexe mascle , huma no
+Hagrid.png : cabell castany , ulleres no , sexe mascle , huma si
+Harry.jpg : cabell moreno , ulleres si , sexe mascle , huma si
+Hermione.jpg : cabell castany , ulleres no , sexe femella , huma si
+Luna.jpg : cabell ros , ulleres no , sexe femella , huma si
+Mcgonagall.jpg : cabell castany , ulleres si , sexe femella , huma si
+Ron.jpg : cabell pelroig , ulleres no , sexe mascle , huma si
+Skeeter.jpg : cabell ros , ulleres si , sexe femella , huma si
+Snape.jpg : cabell moreno , ulleres no , sexe mascle , huma si
+Voldemort.jpg : cabell calb , ulleres no , sexe mascle , huma si

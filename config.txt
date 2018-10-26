@@ -1,0 +1,7 @@
+cabell: ros castany moreno pelroig calb
+
+ulleres: si no
+
+sexe: mascle femella
+
+huma: huma nohuma
