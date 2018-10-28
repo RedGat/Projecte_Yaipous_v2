@@ -2,7 +2,7 @@
 <html>
 <head>
 
-	<title>Qui es Qui Harry Potter</title>
+	<title>Qui es Harry</title>
 	<script type="text/javascript" defer src="imagendelreves.js"></script>
 	<link rel = "stylesheet" href = "stylequiesqui.css">
 
