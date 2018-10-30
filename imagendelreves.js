@@ -1,14 +1,15 @@
 var giradas = 0; 
 var ganador = '';
-var audio = new Audio('sonido.mp3');
+var audio = new Audio('clic.mp3');
+var audio_victoria = new Audio('victoria.mp3');
+var audio_fracaso = new Audio('fracaso.mp3');
+
+
 var cartanog = 0;
 var nogiradas = 0;
 var preguntes = 0;
 var disabled = false;
-
-
-		document.getElementById("intentosganador").value = preguntes;
-
+var clics = 0;
 
 function girar(card){
 	if (card.className == 'flip-card'){
@@ -30,15 +31,18 @@ function contador_giradas() {
 
 
 function comparar_cartas() {
+	document.getElementById("intentosganador").value = preguntes ;
+	var formuintents = document.getElementById("formuintentos");
 	var ultima_carta = document.getElementsByName("cara"); //agafem la unica carta que te com a name cara
 	var carta_servidor = document.getElementById('escollida'); //agafem la carta del servidor que te id escollida
 	if (ultima_carta[0].id==carta_servidor.getAttribute('escollida')) {
 		//comparem el id de la ultima carta, que es el nom de la carta, amb l'atribut escollida de la carta del servidor, que tambe es el nom de la carta
+		audio_victoria.play();
 		alert("¡HAS GANADO! ¡FELICIDADES!");
-		window.location.href = 'ganador.php';
-		
+		formuintents.submit();
 	}
 	else {
+		audio_fracaso.play();
 		alert ("HAS PERDIDO :(");
 		var statusConfirm = confirm("¿Desea iniciar una nueva partida?");
 	if (statusConfirm == true) {
@@ -112,10 +116,7 @@ function masdeUna(){
 		preguntes+=1;
 		mostrar_preguntes();
 		if(disabled == false) {
-		document.getElementById("easy").disabled = true;
-		document.getElementById("easy").style.backgroundColor = "#999966";
-		document.getElementById("easy").style.opacity = 0.7;
-		disabled = true;
+		document.getElementById("easy").hidden = true;
 	}
 		if(ok1)
 		{
@@ -184,10 +185,10 @@ function masdeUna(){
 
 function deshab_easy() {
 	if(disabled == false) {
-		document.getElementById("easy").disabled = true;
+		/*document.getElementById("easy").disabled = true;
 		document.getElementById("easy").style.backgroundColor = "#999966";
-		document.getElementById("easy").style.opacity = 0.7;
-		disabled = true;
+		document.getElementById("easy").style.opacity = 0.7;*/
+		document.getElementById("easy").hidden = true;
 	}
 }
 
@@ -198,7 +199,9 @@ function activar_easy() {
 		document.getElementById("easy").style.fontWeight = "bold";
 		document.getElementById("easy").style.borderColor = "#ff0000";
 		document.getElementById("easy").style.borderWidth = "6px";
-		disabled = true;
+		document.getElementById("easy").disabled = true;
+		activar_modo_easy();
+
 	}
 	
 }
@@ -352,4 +355,26 @@ function fuegos() {
 		ctx.fillStyle = "#000000";
 		ctx.fillRect(0, 0, width, height);
 	}
+}
+
+
+function activar_modo_easy() {
+
+}
+
+
+function never() {
+	//pone un gif como easter egg sin el hidden cuando lleva 3 clics en una foto no utilizable en el juego
+	clics+=1;
+	if (clics==3){
+		document.getElementById("nevergif").hidden=false;
+  		clics=0;
+  		setTimeout(always,3000);
+
+  	}
+}
+
+function always() {
+	//pone el gif oculto de nuevo
+	document.getElementById("nevergif").hidden=true;
 }

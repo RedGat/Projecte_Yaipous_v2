@@ -140,9 +140,10 @@ for ($i=0;$i<count($array_lineas);$i++) {
 fclose($fp);
 
 $x=rand(0,15);
-echo "<img id='escollida' style='left; padding-left: 40px float: left; border:5px solid white;'  escollida='" . trim($array_nombres[$x]) . "' width='150' height='190' src='./img/" . trim($array_nombres[$x]) . "'>";
+echo "<img id='escollida' onclick=never() style='left; padding-left: 40px float: left; border:5px solid white;'  escollida='" . trim($array_nombres[$x]) . "' width='150' height='190' src='./img/" . trim($array_nombres[$x]) . "'>";
 	$escogido = $arrayLineas[$x];
 
+echo '<div hidden="true" id="nevergif"><img style="border-radius: 8px;"width:100% height:100%" src="never.gif"></div>';
 shuffle($array_nombres); //mezcla el array
 
 echo "<table id='cartas' align='center'>";
@@ -238,6 +239,9 @@ echo "<br>";
 	
 </div>
 
+<form id='formuintentos' method="post" action="ganador.php">
+	<p> <input type="hidden" id="intentosganador" name="intentosganador"></p>
+</form>
 
 
 </body>
