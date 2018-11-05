@@ -110,7 +110,7 @@ echo "<br>";
 
 </head>
 <body id="bodyprincipal" onload="mostrar_preguntes()">
-	<h2 style='color:white'>Qui es Qui - Versió Harry Potter</h2>
+	<h2 style='color:white'>Qui és Qui - Versió Harry Potter</h2>
 
 <?php
 
@@ -140,12 +140,16 @@ for ($i=0;$i<count($array_lineas);$i++) {
 fclose($fp);
 
 $x=rand(0,15);
-echo "<img id='escollida' style='left; padding-left: 40px float: left; border:5px solid white;'  escollida='" . trim($array_nombres[$x]) . "' width='150' height='190' src='./img/" . trim($array_nombres[$x]) . "'>";
+echo "<img id='escollida' style='left; float: left; margin-right: 10%; border:5px solid white;'  escollida='" . trim($array_nombres[$x]) . "'id = 'escollida' width='150' height='190' src='./img/" . trim($array_nombres[$x]) . "'>";
 	$escogido = $arrayLineas[$x];
+echo "<div class='timer' style= 'float: right'>
+		<p id='segons'></p>
+		</div>";
+
 
 shuffle($array_nombres); //mezcla el array
 
-echo "<table id='cartas' align='center'>";
+echo "<table id='cartas'>";
 echo "<tr>";
 
 for ($i=0;$i<count($array_nombres);$i++) {
@@ -159,7 +163,7 @@ for ($i=0;$i<count($array_nombres);$i++) {
 		echo "<div class='front-face caracarta'>";
 		echo "<img style='border:5px solid white' name=" . $array_nombres[$i] . " width='150' height='190' src='./img/" . $array_nombres[$i] . "'>";
 		echo "</div>";
-		echo "<div class='back-face' style='border:5px solid white'></div>";
+		echo "<div class='back-face'></div>";
 	echo "</div>";
 		echo "</td>";
 }

@@ -5,18 +5,22 @@ var cartanog = 0;
 var nogiradas = 0;
 var preguntes = 0;
 var disabled = false;
+var gira = true;
+var sec;
+var compt;
 
 
 		document.getElementById("intentosganador").value = preguntes;
 
 
 function girar(card){
+	if (gira == true) {
 	if (card.className == 'flip-card'){
 		audio.play();
 		card.classList.toggle('is-flipped');
 		card.setAttribute('name', 'girada');
 		contador_giradas();
-			}
+			}}
 }
 
 function contador_giradas() {
@@ -52,9 +56,31 @@ function cartanogirada(){
 	cartanog += 1;
 }
 
+function toggle_gira() {
+	gira = false;
+} 
+
+
+function temps_restant() {
+	document.getElementById("segons").innerHTML = sec;
+	if (sec > 0) { 
+	sec = sec-1;
+	}
+	else if(sec == 0) {
+		clearInterval(compt);
+	} }
+
 
 function masdeUna(){
 	cartanogirada();
+
+	sec = 20;
+	gira = true;	
+	setTimeout(toggle_gira,20000);
+	clearInterval(compt);
+	compt = setInterval(temps_restant,1000);
+
+
 	
 	var seleccionada1=document.getElementById('gafas').value;
 	var seleccionada2=document.getElementById('especie').value;

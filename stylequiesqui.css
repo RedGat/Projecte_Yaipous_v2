@@ -23,6 +23,18 @@
     }
 }
 
+.timer {
+    color: red;
+    font-weight: bold;
+    background: white;
+    width: 8%;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5%;
+}
 
 
 .back-face{
@@ -64,9 +76,30 @@
 	background-size: 120% 100%;
 }
 
+
+/*escollida fet per Pop*/
+#escollida {
+  width: 16%;
+  height: 18%;
+}
+
+.back-face {
+  border-radius: 5px;
+  border: solid;
+  border-width: 2px;
+  border-color: white;
+}
+
+.back-face:hover {
+  border: solid;
+  border-width: 6px;
+  border-color: #ff6666;
+  box-shadow: 6px 10px;
+}
+
 #cartas {
 	background-image: url('fondotablero.jpg');
-	width: 60%;
+	width: 50%;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	border-radius: 8px;
