@@ -231,9 +231,15 @@ echo "<br>";
 <div id = "comptador">
 	<label id = "preguntes">PREGUNTES</label>
 	<textarea id = "ta" rows="1" cols="5" readonly></textarea>
-</div>	
-
-<button onclick="activar_easy()" id = "easy">EASY</button>
+</div>
+<div class = "easy">	
+	<select id = "easy">
+		<option value = "easy">Easy</option>
+		<option value = "veryeasy">Very Easy</option>
+	</select>
+	<button id = "activar_easy" onclick="dificultat()">Activa</button>
+</div>
+<!--<button onclick="activar_easy()" id = "easy">EASY</button>-->
 <br>
 
 <div class="mensaje">

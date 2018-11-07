@@ -109,15 +109,9 @@
 	border-color: black;
 }
 
-#easy {
+.easy {
   position: relative;
   left: 70%;
-  width: 100px;
-  height: 30px;
-  border-width: 4px;
-  border-color: brown;
-  background-color: #996600;
-  color: black;
 }
 
 #submit_consulta {

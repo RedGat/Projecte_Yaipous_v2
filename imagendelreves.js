@@ -211,19 +211,32 @@ function masdeUna(){
 function deshab_easy() {
 	if(disabled == false) {
 		document.getElementById("easy").disabled = true;
-		document.getElementById("easy").style.backgroundColor = "#999966";
-		document.getElementById("easy").style.opacity = 0.7;
+		document.getElementById("activar_easy").disabled = true;
 		disabled = true;
+	}
+}
+
+
+function dificultat() {
+	if (document.getElementById("easy").selectedIndex = "0") {
+		activar_easy();
+	}
+	else if (document.getElementById("easy").selectedIndex = "1") {
+		activar_veryeasy();
 	}
 }
 
 function activar_easy() {
 	document.getElementById("easy").disabled = true;
 	if(disabled == false) {
-		document.getElementById("easy").style.backgroundColor = "#b38f00";
-		document.getElementById("easy").style.fontWeight = "bold";
-		document.getElementById("easy").style.borderColor = "#ff0000";
-		document.getElementById("easy").style.borderWidth = "6px";
+		disabled = true;
+	}
+	
+}
+
+function activar_veryeasy() {
+	document.getElementById("easy").disabled = true;
+	if(disabled == false) {
 		disabled = true;
 	}
 	
