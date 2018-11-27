@@ -1,3 +1,7 @@
+<?php 
+session_start(); //Iniciem una sessió
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,106 +11,102 @@
 	<link rel = "stylesheet" href = "stylequiesqui.css">
 
 <?php
-//abrimos y leemos el fichero txt.
-$fp = fopen("imatges.txt", "r");
-//creamos un array para incluir cada linea leida.
-
-
-$arraynoms=array();
-$arraycaract=array();
-$arrayvalores=array();
-$arraylineas=array();
-$arrayLineas=array();
-$arrayLineasexplo=array();
-while(!feof($fp)){
-$delimeter=array(":",","," ");
-$linea = fgets($fp);
-$replace= str_replace($delimeter, $delimeter[0], $linea);
-$explode=explode($delimeter[0], $replace);
-array_push($arraylineas, $linea);
-array_push($arraynoms, $explode[0]);
-
-array_push($arrayvalores, $explode[4],$explode[8],$explode[12]);
+	$fp = fopen("imatges.txt", "r");
+	$array_lineas_imagenes=array();//obtenemos un array con todas las lineas del fichero imagenes.
+	$array_solosnombres=array();// Contiene los nombres de las cartas
+	$array_soloatributos=array();
+	$array_atributos_sin_comas=array();
+while (!feof($fp)){
+    $linea = fgets($fp);
+    $linea_split = explode(":", $linea);
+    array_push(($array_lineas_imagenes),$linea_split);
 }
-array_push($arraycaract, $explode[3],$explode[7],$explode[11],$explode[15]);
-for($i=0;$i<count($arraylineas);$i++){
-$atributs=explode(":", $arraylineas[$i]);
-array_push($arrayLineas, $atributs[1]);
-}
-for($n=0;$n<4;$n++){
-$atributs1=explode(",", $arrayLineas[$n]);
-array_push(($arrayLineasexplo), $atributs1[$n]);
-}
+	//obtencion de los nombres de las cartas.
+    for($i=0;$i<count($array_lineas_imagenes);$i++){
+    	array_push(($array_solosnombres), $array_lineas_imagenes[$i][0]);
+    }
+    for($a=0;$a<count($array_lineas_imagenes);$a++){
+    	array_push(($array_soloatributos), $array_lineas_imagenes[$a][1]);
+    }
+    for($b=0;$b<count($array_soloatributos);$b++){
+    	$atributos_split=explode(",",$array_soloatributos[$b]);
+    	array_push(($array_atributos_sin_comas), $atributos_split);
+    	//print_r($atributos_split);
+    }
+
+//print_r($array_solosnombres[0]);
+print_r($array_atributos_sin_comas[0]);
+
+//print_r($array_soloatributos);
 
 
-$zp = fopen("config.txt", "r");
-//creamos un array para incluir cada linea leida.
-$arraynomsc=array();
-$arraycaractc=array();
-$arrayvaloresc=array();
-$arraylineasc=array();
-$arrayLineasc=array();
-$espode=array();
-$arraycaracteristiques=array();
-
-while(!feof($zp)){
-$delimeterc=array(":"," ");
-$lineac = fgets($zp);
-$replacec= str_replace($delimeterc, $delimeterc[0], $lineac);
-$explodec=explode($delimeterc[0], $replacec);
-
-array_push($espode, $explodec);
-array_push($arraylineasc, $lineac);
-array_push($arraynomsc, $explodec[0]);
-
+$cp = fopen("config.txt", "r");
+	$array_lineas_config=array();//obtenemos un array con todas las lineas del fichero imagenes.
+	$array_solocaracteristicas=array();// Contiene los nombres de las cartas
+	$array_respuestas_caracteristicas=array();
+	$array_atributos_sin_espacios=array();
+while (!feof($cp)){
+    $lineac = fgets($cp);
+    $lineac_split = explode(":", $lineac);
+    array_push(($array_lineas_config),$lineac_split);
 
 }
-array_push($arraycaractc, $explodec[2],$explodec[3]);
+	//obtencion de los nombres de las caractaeristicas.
+    for($i=0;$i<count($array_lineas_config);$i++){
+    	array_push(($array_solocaracteristicas), ($array_lineas_config[$i][0]));
+    }
 
-for($c=0;$c<count($arraylineasc);$c++){
-$atributsc=explode(":", $arraylineasc[$c]);
-array_push($arrayLineasc, $atributsc);
-}
+    for($a=0;$a<count($array_lineas_config);$a++){
+    	array_push(($array_respuestas_caracteristicas), $array_lineas_config[$a][1]);
+    }
 
+    for($b=0;$b<count($array_respuestas_caracteristicas);$b++){
+    	$atributos_split=explode(" ",$array_respuestas_caracteristicas[$b]);
+    	array_push(($array_atributos_sin_espacios), $atributos_split);
+    	//print_r($atributos_split);
+    }
 
-fclose($zp);
+//print_r($array_solocaracteristicas);
+//print_r($array_atributos_sin_espacios);
+//print_r(count($array_atributos_sin_espacios));
+//print_r($array_respuestas_caracteristicas);
+//print_r($array_lineas_config);
+echo '<br>';
 fclose($fp);
+fclose($cp);
+
+
+$array_controlar_pregunta=array();
+$array_controlar_pregunta2=array();
+$array_controlar_pregunta3=array();
+$array_controlar_pregunta4=array();
 
 
 
-
-
-
-
-//Una mateixa imatge (nom d'arxiu) apareix dos cops a l'arxiu de configuració.
-
-
-
-if(count($arraynoms)>count(array_unique($arraynoms))){
-	header("location:personajesrepetidos.php");
-}
-
-
-if(count($arrayLineas)>count(array_unique($arrayLineas))){	//Dues imatges diferents tenen les mateixes característiques.
-	
-	header("location:errores.php");
-
-}
-
-//Una característica que apareix al fitxer imatges.txt no apareix al fitxer config.txt (al revés no importa)
-
-
-for($v=0;$v<count($arraycaract);$v++){
-	if(in_array($arraycaract[$v], $arraynomsc)){
-		
-	}else{
-		
-		header("location:atributonoexiste.php");
+for($i=0;$i<count($array_solocaracteristicas);$i++){
+	for($j=0;$j<=count($array_solocaracteristicas);$j++){
+		if(trim($array_atributos_sin_espacios[$i][$j])=="si"){
+			$var_unica=$array_solocaracteristicas[$i];
+			array_push(($array_controlar_pregunta),$var_unica);
+			
+		}else{
+			if($array_atributos_sin_espacios[$i][$j]!="" && trim($array_atributos_sin_espacios[$i][$j])!="no"){
+				$var_unica2=$array_atributos_sin_espacios[$i][$j];
+				array_push(($array_controlar_pregunta2),$var_unica2);
+			}
+			
+		}
 	}
-	
+		
 }
-echo "<br>";
+
+	
+	$array_comobopregunta=array();
+	$array_comobopregunta=array_merge($array_controlar_pregunta2,$array_controlar_pregunta);
+	//print_r($array_comobopregunta);
+	//print_r($array_controlar_pregunta2);
 ?>
+
 
 </head>
 <body id="bodyprincipal" onload="mostrar_preguntes()">
@@ -138,13 +138,30 @@ for ($i=0;$i<count($array_lineas);$i++) {
 
 
 fclose($fp);
+	
 
-$x=rand(0,15);
-echo "<img id='escollida' onclick=never() style='left; padding-left: 40px float: left; border:5px solid white;'  escollida='" . trim($array_nombres[$x]) . "' width='150' height='190' src='./img/" . trim($array_nombres[$x]) . "'>";
+if (isset($_SESSION["escogida"])) {
+	$escogida = $_SESSION["escogida"];
+	$escogido = $_SESSION["escogido"];
+	$array_nombres = $_SESSION["array_nombres"];
+	}
+else {
+	$x = rand(0,15);
+	$escogida = $array_nombres[$x];
 	$escogido = $arrayLineas[$x];
+	$_SESSION["escogido"] = $escogido;
+	$_SESSION["escogida"] = $escogida;
+	shuffle($array_nombres); //mezcla el array
+	$_SESSION["array_nombres"]=$array_nombres;
+
+
+}
+
+echo "<img id='escollida' onclick=never() style='left; padding-left: 40px float: left; border:5px solid white;'  escollida='" . trim($escogida) . "' width='150' height='190' src='./img/" . trim($escogida) . "'>";
+
 
 echo '<div hidden="true" id="nevergif"><img style="border-radius: 8px;"width:100% height:100%" src="never.gif"></div>';
-shuffle($array_nombres); //mezcla el array
+
 
 echo "<table id='cartas' align='center'>";
 echo "<tr>";
@@ -158,7 +175,7 @@ for ($i=0;$i<count($array_nombres);$i++) {
 	echo "<td>";
 	echo '<div class="flip-card" name="cara" onclick="girar(this)" id="' . trim($array_nombres[$i]) . '">';
 		echo "<div class='front-face caracarta'>";
-		echo "<img style='border:5px solid white' name=" . $array_nombres[$i] . " width='150' height='190' src='./img/" . $array_nombres[$i] . "'>";
+		echo "<img style='border:5px solid white' name=" . trim($array_nombres[$i]) . " width='150' height='190' src='./img/" . trim($array_nombres[$i]) . "'>";
 		echo "</div>";
 		echo "<div class='back-face' style='border:5px solid white'></div>";
 	echo "</div>";
@@ -170,56 +187,64 @@ echo "</tr> </table>";
 ?>
 
 <?php
-
-
-$arraycara=array();
-$lineaescogido = explode(",", $escogido);
-array_push(($arraycara),$lineaescogido);
+$compararrespuesta=$array_atributos_sin_comas[0];
+print_r($compararrespuesta);
+//$arraycara=array();
+//$lineaescogido = explode(",", $escogido);
+//array_push(($arraycara),$lineaescogido);
 echo "<br>";
-echo "<p style='display:none' id='cabellorespuesta'>" . $arraycara[0][0] . "</p>";
-echo "<p style='display:none' id='ulleresrespuesta'>" . $arraycara[0][1] . "</p>";
-echo "<p style='display:none' id='sexerespuesta'>" . $arraycara[0][2] . "</p>";
-echo "<p style='display:none' id='humarespuesta'>" . $arraycara[0][3] . "</p>";
+for($i=0;$i<count($escogido);$i++){
+	//echo $escogido[$i];
+	//echo '<br>';
+echo "<p style='display:none' class='respostes'>" . $escogido[$i]. "</p>";
+echo "<p style='display:none' id='resposta[".$i."]'>" . $escogido[$i]. "</p>";//caracteriticas de la carta elegida.
+echo "<p style='display:none' id='compara_respuesta[".$i."]'>" . $array_atributos_sin_comas[$i][$i]. "</p>";
+echo "<p style='display:none' id='comparar[".$i."]'>" .trim($array_solocaracteristicas[$i]) . "</p>";
+echo "<p style='display:none' id='comparar_pelo[".$i."]'>" .$array_controlar_pregunta2[$i] . "</p>";
+echo "<p style='display:none' id='solo_caracteristicas[".$i."]'>" .$array_solocaracteristicas[$i] . "</p>";
+echo "<p style='display:none' id='cartasescogida'>" .$cartaEscogida . "</p>";
+echo "<p style='display:none' id='cartasTablero[".$i."]'>" .$array_nombres[$i]. "</p>";
+echo "<p style='display:none' id='lineasimagenes'>" .$numeroimagenes . "</p>";
 
-echo "<br>";
+}
+for($i=0;$i<$numeroimagenes;$i++){
+	$escogido1[$i]= $array_atributos_sin_comas[$i];
+}
+
+
+for($p=0;$p<count($escogido);$p++){
+	
+	print_r($escogido1[$p]);
+	echo "<p style='display:none' id='todoslosatributos[".$i."]'>" .$varlinea[$i]. "</p>";//array con cada linea de atributos
+	}
+
+
+
+for($i=0;$i<$numeroimagenes;$i++){
+	
+	echo "<p style='display:none' id='solonombres[".$i."]'>" .$array_solosnombres[$i]. "</p>";
+	//echo "<p style='display:none' id='todoslosatributos[".$i."]'>" .$cartasEntablero. "</p>";//array con cada linea de atributos
+}
+for($i=0;$i<count($array_comobopregunta);$i++){
+echo "<p style='display:none' class='combos'>".$array_comobopregunta[$i] . "</p>";
+
+}
 
 ?>
 
-<script type="text/javascript">
-    var jsvarCabell = document.getElementById('cabellorespuesta').innerHTML.trim();
-    var jsvarUlleres = document.getElementById('ulleresrespuesta').innerHTML.trim();
-    var jsvarSexe = document.getElementById('sexerespuesta').innerHTML.trim();
-    var jsvarHuma = document.getElementById('humarespuesta').innerHTML.trim();
-
-
-</script>
 
 <div class="cartas">
-	<select id="gafas" name="caracteristica">
-		<option selected value="0" id='dtf_gafas'> </option>
-		<option value="ulleres si">¿Porta ulleres?</option>
+	<select name="pruebas" id="select">
+		<?php
+		echo '<option selected value="0"> </option>';	
+		for($i=0;$i<count($array_comobopregunta);$i++){
+		echo '<option id="seleccionada['.$i.']" value='.trim($array_comobopregunta[$i]).'>'.trim($array_comobopregunta[$i]).'</option>';
+
+		}	
+	?>
 	</select>
 
-	<select id="especie" name="caracteristica">
-		<option selected value="0" id='dtf_hum' > </option>
-		<option value="huma si">¿És humà?</option><!-- resposta "huma si"-->
-	</select>
 
-	<select id="sexualidad" name="caracteristica">
-		<option selected value="0" id='dtf_sex'> </option>
-		<option value="sexe mascle">¿És macle?</option>
-		<option value="sexe famella">¿És femella?</option>
-	</select>
-
-	<select id="pelos" name="caracteristica">
-		<option selected value="0" id='dtf_pelo'> </option>
-		<option value="cabell calb">¿És calb?</option>
-		<option value="cabell ros">¿És ros?</option>
-		<option value="cabell castany">¿És castany?</option>
-		<option value="cabell pelroig">¿És pelroig?</option>
-		<option value="cabell moreno">¿És moreno?</option>
-		
-	</select>
 	</div>
 <div class="boton_pregunta">
     <input type="submit" name="submit" onclick="masdeUna();deshab_easy()" value="Fes la pregunta"/>

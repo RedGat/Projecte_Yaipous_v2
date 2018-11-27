@@ -36,11 +36,11 @@ echo "<span hidden='true' id='pasar_intentos'>".$intentosdelganador."</span>";
 		document.getElementById("nom").hidden=false;
 	}
 	if (statusConfirm == false) {
-		window.location.href = 'reves.php';
+		location.href="redirigir.php";
 	}
 	
 }
-setTimeout(quiere_registrar, 5000);
+setTimeout(quiere_registrar, 3000);
 
 function ranking() {
 	window.location.href = 'ranking.php';

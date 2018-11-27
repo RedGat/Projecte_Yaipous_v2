@@ -3,7 +3,7 @@ var ganador = '';
 var audio = new Audio('clic.mp3');
 var audio_victoria = new Audio('victoria.mp3');
 var audio_fracaso = new Audio('fracaso.mp3');
-
+var modo = 'normal'; //nuevo para juntar
 
 var cartanog = 0;
 var nogiradas = 0;
@@ -12,13 +12,16 @@ var disabled = false;
 var clics = 0;
 
 function girar(card){
-	if (card.className == 'flip-card'){
-		audio.play();
-		card.classList.toggle('is-flipped');
-		card.setAttribute('name', 'girada');
-		contador_giradas();
-			}
+	if (modo=='normal') { //nuevo para juntar
+		if (card.className == 'flip-card'){
+			audio.play();
+			card.classList.toggle('is-flipped');
+			card.setAttribute('name', 'girada');
+			contador_giradas();
+				}
+	}
 }
+
 
 function contador_giradas() {
 	nogiradas += 1;
@@ -46,10 +49,17 @@ function comparar_cartas() {
 		alert ("HAS PERDIDO :(");
 		var statusConfirm = confirm("¿Desea iniciar una nueva partida?");
 	if (statusConfirm == true) {
-		location.reload();
+		location.href="redirigir.php";
+		//location.reload();
 		}
 
 	}
+}
+
+function girarTodas(texto){
+	var vgirar=document.getElementById(texto);
+	vgirar.classList.toggle('is-flipped');
+	vgirar.setAttribute('name', 'girada');
 }
 
 function cartanogirada(){
@@ -79,117 +89,181 @@ function masdeUna(){
 	var ok4 = false;
 	
 	
-	if(seleccionada1!="0"){
-		num1=1;
-		ok1 = true;
-	}
-	if(seleccionada2!="0"){
-		num2=1;
-		ok2 = true;
-	}
-	if(seleccionada3!="0"){
-		num3=1;
-		ok3=true;
-	}
-	if(seleccionada4!="0"){
-		num4=1;
-		ok4=true;
-	}
-	num=num1+num2+num3+num4;
-	if(num>=2){
-		alert("Solo puedes escoger una pregunta");
+	if(seleccionada!="0"){
+		ok1=true;
+		//alert(jsvarLineasimagenes);
+		for(var n=0;n<16;n++){
 
-		document.getElementById("dtf_gafas").selected = true;
-		document.getElementById("dtf_pelo").selected = true;
-		document.getElementById("dtf_sex").selected = true;
-		document.getElementById("dtf_hum").selected = true;
-	}
-	else if(num<1){
-		alert("Has de escoger una pregunta");
-	}
-	else if(cartanog > (nogiradas + 1)){
-		alert("Segur que vols realitzar una altra pregunta sense girar cap carta?");
-		cartanog = 0;
-		nogiradas = 50000000;
-	}
-	else{
-		preguntes+=1;
-		mostrar_preguntes();
-		if(disabled == false) {
-		document.getElementById("easy").hidden = true;
-	}
-		if(ok1)
-		{
-			if(seleccionada1==jsvarUlleres){
-				document.getElementById("mensaje").style.color ="green";
-				document.getElementById("texto").innerHTML = "SI";
-				document.getElementById("mensaje").innerHTML="*";
-			}else{
-				document.getElementById("mensaje").style.color ="red";
-				document.getElementById("texto").innerHTML = "NO";
-				document.getElementById("mensaje").innerHTML="X";
+			var jsvarComparar = document.getElementById('todoslosatributos['+n+']').innerHTML.trim();
+			console.log(jsvarComparar);
+			
+			for(var i=0;i<jsvarResposta.length;i++){
+
+					
+				var jsvarComparar2 = document.getElementById('resposta['+i+']').innerHTML.trim();
+				
+				var jsvarSoloCaracteristicas = document.getElementById('solo_caracteristicas['+i+']').innerHTML.trim();
+				//console.log(jsvarComparar)
+				//alert(jsvarComparar);
+				
+				var jsvarcabello=jsvarSoloCaracteristicas+" "+seleccionada;
+				
+				if (seleccionada+" si"==jsvarComparar2){
+					document.getElementById("mensaje").style.color ="green";
+					document.getElementById("texto").innerHTML = "SI";
+					document.getElementById("mensaje").innerHTML="*";
+					ok1=false;
+
+					//document.getElementById('seleccionada['+i+']').style.display = "none";
+					
+				} 
+				else if(seleccionada+" no"==jsvarComparar2){
+					document.getElementById("mensaje").style.color ="red";
+					document.getElementById("texto").innerHTML = "NO";
+					document.getElementById("mensaje").innerHTML="X";
+					//alert(jsvarComparar2);
+					ok1=false;
+					
+					//document.getElementById('seleccionada['+i+']').style.display = "none";
+				
+					
+				}
+
+				else if(jsvarcabello==jsvarComparar2){
+					document.getElementById("mensaje").style.color ="green";
+					document.getElementById("texto").innerHTML = "SI";
+					document.getElementById("mensaje").innerHTML="*";
+					//alert(jsvarComparar2);
+					ok1=false;
+					
+					//document.getElementById('seleccionada['+i+']').style.display = "none";
+					
+					
+				}
+				
+				if(ok1){
+					document.getElementById("mensaje").style.color ="red";
+					document.getElementById("texto").innerHTML = "NO";
+					document.getElementById("mensaje").innerHTML="X";
+					texto=document.getElementById('solonombres['+i+']').innerHTML.trim();
+					girarTodas(texto);
+
+
+
+
+
+					//document.getElementById('seleccionada['+i+']').style.display = "none";
+					
+					/*function girarSola(){
+						//alert("hola")
+						var cartagirar=document.getElementById('giradas').innerHTML.trim();
+						girar(cartagirar);
+					}
+					for(e=0;e<jsvarLineasimagenes;e++){
+						alert("entra");
+						var cartaelegida=document.getElementById('cartasescogida').innerHTML.trim();
+						var cartanoelegida=document.getElementById('cartasTablero['+e+']').innerHTML.trim();
+
+						alert(cartanoelegida);
+						alert(cartaelegida);
+						
+					}
+					
+					*/
+					
+
+				}
 				
 			}
 		}
-		
-		if(ok2)
-		{
-			if(seleccionada2==jsvarHuma){
-				document.getElementById("mensaje").style.color ="green";
-				document.getElementById("texto").innerHTML = "SI";
-				document.getElementById("mensaje").innerHTML="*";
-			}else{
-				document.getElementById("mensaje").style.color ="red";
-				document.getElementById("texto").innerHTML = "NO";
-				document.getElementById("mensaje").innerHTML="X";
-				d
-			}
-		}
-
-		if(ok3)
-		{
-			if(seleccionada3==jsvarSexe){
-				document.getElementById("mensaje").style.color ="green";
-				document.getElementById("texto").innerHTML = "SI";
-				document.getElementById("mensaje").innerHTML="*";
-			}else{
-				document.getElementById("mensaje").style.color ="red";
-				document.getElementById("texto").innerHTML = "NO";
-				document.getElementById("mensaje").innerHTML="X";
-				
-			}
-		}
-		
-		if(ok4)
-		{
-			if(seleccionada4==jsvarCabell){
-				document.getElementById("mensaje").style.color ="green";
-				document.getElementById("texto").innerHTML = "SI";
-				document.getElementById("mensaje").innerHTML="*";
-
-			}else{
-				document.getElementById("mensaje").style.color ="red";
-				document.getElementById("texto").innerHTML = "NO";
-				document.getElementById("mensaje").innerHTML="X";
-				
-			}
-		}
-
-		
-	}
-		
+	}	
 	
-	}
+	for(var n=0;n<jsvarCombo.length;n++){
+		var jsvarOcultar=document.getElementById('seleccionada['+n+']').innerHTML.trim();
+		if(seleccionada==jsvarOcultar){
+			document.getElementById('seleccionada['+n+']').style.display = "none";
+		}
 
+	}
+	document.getElementById('select').value="0";
+}
+
+/*		
+for(var i=0;i<jsvarResposta.length;i++){
+	
+	alert("hola");
+
+	var jsvarComparar = document.getElementById('comparar['+i+']').innerHTML.trim();
+	var jsvarCompararCabello = document.getElementById('comparar_pelo['+i+']').innerHTML.trim();
+	
+	//alert(jsvarComparar+" si");
+	if(seleccionada==jsvarComparar){
+		var jsvaracomparar=jsvarComparar+" si";
+
+		var jsvarComparar2 = document.getElementById('resposta['+i+']').innerHTML.trim();
+		//alert(jsvarComparar2);
+		//alert(jsvaracomparar);
+	
+		//var jsvarComparar3 = document.getElementById('compara_respuesta['+i+']').innerHTML;
+		//alert(jsvarComparar3);
+
+		if(jsvarComparar2==jsvaracomparar){
+			document.getElementById("mensaje").style.color ="green";
+			document.getElementById("texto").innerHTML = "SI";
+			document.getElementById("mensaje").innerHTML="*";
+			alert("SI");
+		}else{
+			document.getElementById("mensaje").style.color ="red";
+			document.getElementById("texto").innerHTML = "NO";
+			document.getElementById("mensaje").innerHTML="X";
+			alert("NO");
+	}
+	
+		//alert(jsvarResposta2);
+
+		document.getElementById("mensaje").style.color ="green";
+		document.getElementById("texto").innerHTML = "SI";
+		document.getElementById("mensaje").innerHTML="*";
+		
+	}else{
+		document.getElementById("mensaje").style.color ="red";
+		document.getElementById("texto").innerHTML = "NO";
+		document.getElementById("mensaje").innerHTML="X";
+		
+		
+}
+}
+
+}
+*/
 
 
 function deshab_easy() {
 	if(disabled == false) {
-		/*document.getElementById("easy").disabled = true;
+		document.getElementById("easy").disabled = true;
 		document.getElementById("easy").style.backgroundColor = "#999966";
-		document.getElementById("easy").style.opacity = 0.7;*/
-		document.getElementById("easy").hidden = true;
+		document.getElementById("easy").style.opacity = 0.7;
+		disabled = true;
 	}
+}
+function deshab_VeryEasy() {
+	if(disabled == false) {
+		document.getElementById("easy").disabled = true;
+		document.getElementById("easy").style.backgroundColor = "#999966";
+		document.getElementById("easy").style.opacity = 0.7;
+		disabled = true;
+	}
+}
+function activar_VeryEasy() {
+	document.getElementById("easy").disabled = true;
+	if(disabled == false) {
+		document.getElementById("easy").style.backgroundColor = "#b38f00";
+		document.getElementById("easy").style.fontWeight = "bold";
+		document.getElementById("easy").style.borderColor = "#ff0000";
+		document.getElementById("easy").style.borderWidth = "6px";
+		disabled = true;
+	}
+	
 }
 
 function activar_easy() {
@@ -199,9 +273,7 @@ function activar_easy() {
 		document.getElementById("easy").style.fontWeight = "bold";
 		document.getElementById("easy").style.borderColor = "#ff0000";
 		document.getElementById("easy").style.borderWidth = "6px";
-		document.getElementById("easy").disabled = true;
-		activar_modo_easy();
-
+		disabled = true;
 	}
 	
 }
